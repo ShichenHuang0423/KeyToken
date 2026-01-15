@@ -44,6 +44,17 @@ def load_clip_model(clip_model_name, pretrained, beta=0.):
 
             if 'vision_encoder_state_dict' in checkpoint.keys():  # tecoa checkpoint
                 model.visual.load_state_dict(checkpoint['vision_encoder_state_dict'])
+            elif 'enhanced_model_state_dict' in checkpoint.keys():  # training checkpoint with enhanced model
+                # 从enhanced_model加载，需要提取visual部分
+                enhanced_state = checkpoint['enhanced_model_state_dict']
+                # 构建visual模型的state_dict (过滤visual.前缀)
+                visual_state = {k.replace('visual.', ''): v for k, v in enhanced_state.items() if k.startswith('visual.')}
+                model.visual.load_state_dict(visual_state)
+            elif 'model_state_dict' in checkpoint.keys():  # training checkpoint with base model
+                # 尝试从model_state_dict加载
+                base_state = checkpoint['model_state_dict']
+                visual_state = {k.replace('visual.', ''): v for k, v in base_state.items() if k.startswith('visual.')}
+                model.visual.load_state_dict(visual_state)
             else:
                 model.visual.load_state_dict(checkpoint)
     except RuntimeError as e:  # try loading whole model

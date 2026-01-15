@@ -35,7 +35,7 @@ def eval_model(args):
         args.pretrained_rob_path = None
     print(f"Model at: {args.pretrained_rob_path}")
     
-    model, image_processor, tokenizer, context_len = load_pretrained_model(model_path, args.model_base, model_name, pretrained_rob_path=args.pretrained_rob_path)
+    model, image_processor, tokenizer, context_len = load_pretrained_model(model_path, args.model_base, model_name, pretrained_rob_path=args.pretrained_rob_path, dtype='float16')
 
     questions = json.load(open(os.path.expanduser(args.question_file), "r"))
     questions = get_chunk(questions, args.num_chunks, args.chunk_idx)

@@ -63,7 +63,9 @@ class ClassificationModel(torch.nn.Module):
             self.input_normalize(self.resizer(vision)),
             normalize=True
         )
-        logits = embedding_norm_ @ self.text_embedding
+        # 确保text_embedding在与embedding_norm_相同的设备上（多GPU兼容）
+        text_embedding = self.text_embedding.to(embedding_norm_.device)
+        logits = embedding_norm_ @ text_embedding
         if self.logit_scale:
             logits *= self.model.logit_scale.exp()
         return logits

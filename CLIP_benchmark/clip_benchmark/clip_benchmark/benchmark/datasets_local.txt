@@ -1,0 +1,13 @@
+cifar10
+cifar100
+stl10
+caltech101
+pets
+flowers
+dtd
+eurosat
+fgvc_aircraft
+cars
+pcam
+imagenet_r
+imagenet_sketch

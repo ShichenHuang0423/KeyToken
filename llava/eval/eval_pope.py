@@ -93,6 +93,15 @@ if __name__ == "__main__":
         outputs += eval_pope(cur_answers, os.path.join(args.annotation_dir, file))
         print("====================================")
     print(f"Average F1-score: {avg_f1_score/3:.4f}")
-    with open(f"/data/naman_deep_singh/project_multimodal/pope_evals/{args.model_name}.txt", 'w') as f:
+    
+    # 使用 result_file 的目录来保存 summary 文件
+    result_dir = os.path.dirname(args.result_file)
+    # 只使用 model_name 的文件名部分，避免路径重复
+    model_basename = os.path.basename(args.model_name)
+    summary_file = os.path.join(result_dir, f"{model_basename}_summary.txt")
+    
+    with open(summary_file, 'w') as f:
         f.write(outputs)
         f.writelines(f"Average F1-score: {avg_f1_score/3:.4f}\n")
+    
+    print(f"Summary saved to: {summary_file}")

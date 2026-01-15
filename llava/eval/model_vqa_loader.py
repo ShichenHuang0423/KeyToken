@@ -115,9 +115,9 @@ def eval_model(args):
     print(f"Need to load llava")
     
     if args.eval_model == 'LLAVA':
-        model, image_processor, tokenizer, context_len = load_pretrained_model(model_path, args.model_base, model_name, pretrained_rob_path=args.pretrained_rob_path)
+        model, image_processor, tokenizer, context_len = load_pretrained_model(model_path, args.model_base, model_name, pretrained_rob_path=args.pretrained_rob_path, dtype='float16')
     else:
-        _, image_processor, tokenizer, context_len = load_pretrained_model(model_path, args.model_base, model_name, pretrained_rob_path=args.pretrained_rob_path)
+        _, image_processor, tokenizer, context_len = load_pretrained_model(model_path, args.model_base, model_name, pretrained_rob_path=args.pretrained_rob_path, dtype='float16')
         model_args = get_of_args(args.pretrained_rob_path)
         eval_model = EvalModelAdv(model_args, adversarial=False)
         os.environ["CUDA_VISIBLE_DEVICES"] = str(0)

@@ -1,0 +1,19 @@
+# CLIP 模型配置 (ViT-L/14 架构)
+# 格式: architecture,pretrained_weights
+
+# 1. OpenAI CLIP (基线 - 无对抗训练)
+#    干净样本准确率: ~75.5%
+#    对抗鲁棒性 (ε=2): ~0%
+ViT-L-14,openai
+
+# 2. FARE² (ε=2) - 平衡型
+#    干净样本准确率: ~73.8%
+#    对抗鲁棒性 (ε=2): ~56.8%
+#    推荐：日常评估
+ViT-L-14,~/data/KeyToken/models/fare_eps_2.pt
+
+# 3. FARE² (ε=4) - 强鲁棒型
+#    干净样本准确率: ~71.2%
+#    对抗鲁棒性 (ε=4): ~32.4%
+#    推荐：强对抗攻击评估
+ViT-L-14,~/data/KeyToken/models/fare_eps_4.pt
